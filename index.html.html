@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student e-Portfolio | Cybersecurity & Software Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f6ff',
+                            100: '#e0edff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        accent: {
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            400: '#22d3ee',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 12px 24px -10px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Video Container for 16:9 Aspect Ratio */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brand-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-400 flex items-center justify-center font-bold text-white shadow-lg shadow-brand-500/20">
+                        eP
+                    </div>
+                    <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                        Student e-Portfolio
+                    </span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2" aria-label="Main Navigation">
+                    <a href="#home" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Home</a>
+                    <a href="#labs" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Labs & Cases</a>
+                    <a href="#reflection" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Reflection</a>
+                    <a href="#skills" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Skills</a>
+                    <a href="#resources" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition">Resources</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none" aria-label="Toggle navigation menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-slate-800/80 px-4 pt-2 pb-4 space-y-1">
+            <a href="#home" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Home</a>
+            <a href="#labs" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Labs & Cases</a>
+            <a href="#reflection" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Reflection</a>
+            <a href="#skills" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Skills</a>
+            <a href="#resources" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Resources</a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+
+        <section id="home" class="scroll-mt-24 space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-2xl glass-panel p-8 md:p-12 border border-slate-800">
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                        Academic Capstone Showcase
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Security Implementation & Vulnerability Analysis Portfolio
+                    </h1>
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                        <span class="font-semibold text-slate-200">Scenario:</span> [WRITE YOUR INTRO - e.g., "This e-Portfolio documents our team's hands-on empirical study on identifying, demonstrating, and remediating common mobile and web application vulnerabilities. Through six distinct implementation cases, we showcase real-world attack vectors alongside secure coding best practices."]
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4 text-sm text-slate-400 border-t border-slate-800/80">
+                        <div><strong class="text-slate-200">Programme:</strong> [YOUR PROGRAMME]</div>
+                        <div class="hidden sm:block">•</div>
+                        <div><strong class="text-slate-200">Instructor:</strong> [INSTRUCTOR NAME]</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Members Section -->
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    Group Members & Contributions
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Member 1 -->
+                    <div class="glass-card p-5 rounded-xl space-y-3 relative overflow-hidden">
+                        <div class="w-2 h-full bg-brand-500 absolute left-0 top-0"></div>
+                        <div class="pl-2">
+                            <h3 class="font-bold text-white text-base">[YOUR NAME]</h3>
+                            <p class="text-xs text-brand-400 font-mono mt-0.5">Matric: [YOUR MATRIC]</p>
+                            <span class="inline-block mt-2 px-2.5 py-0.5 text-xs font-medium bg-slate-800 text-slate-300 rounded-md border border-slate-700">
+                                Role: [Your Role]
+                            </span>
+                            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+                                <strong class="text-slate-300">Contribution:</strong> [Contribution details here - e.g., Managed database security implementation and case studies analysis.]
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="glass-card p-5 rounded-xl space-y-3 relative overflow-hidden">
+                        <div class="w-2 h-full bg-accent-500 absolute left-0 top-0"></div>
+                        <div class="pl-2">
+                            <h3 class="font-bold text-white text-base">[YOUR NAME]</h3>
+                            <p class="text-xs text-accent-400 font-mono mt-0.5">Matric: [YOUR MATRIC]</p>
+                            <span class="inline-block mt-2 px-2.5 py-0.5 text-xs font-medium bg-slate-800 text-slate-300 rounded-md border border-slate-700">
+                                Role: [Your Role]
+                            </span>
+                            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+                                <strong class="text-slate-300">Contribution:</strong> [Contribution details here - e.g., Developed live code login test vulnerabilities and UI components.]
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="glass-card p-5 rounded-xl space-y-3 relative overflow-hidden">
+                        <div class="w-2 h-full bg-indigo-500 absolute left-0 top-0"></div>
+                        <div class="pl-2">
+                            <h3 class="font-bold text-white text-base">[YOUR NAME]</h3>
+                            <p class="text-xs text-indigo-400 font-mono mt-0.5">Matric: [YOUR MATRIC]</p>
+                            <span class="inline-block mt-2 px-2.5 py-0.5 text-xs font-medium bg-slate-800 text-slate-300 rounded-md border border-slate-700">
+                                Role: [Your Role]
+                            </span>
+                            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+                                <strong class="text-slate-300">Contribution:</strong> [Contribution details here - e.g., Implemented SQL injection prevention protocols and API routing.]
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Member 4 -->
+                    <div class="glass-card p-5 rounded-xl space-y-3 relative overflow-hidden">
+                        <div class="w-2 h-full bg-emerald-500 absolute left-0 top-0"></div>
+                        <div class="pl-2">
+                            <h3 class="font-bold text-white text-base">[YOUR NAME]</h3>
+                            <p class="text-xs text-emerald-400 font-mono mt-0.5">Matric: [YOUR MATRIC]</p>
+                            <span class="inline-block mt-2 px-2.5 py-0.5 text-xs font-medium bg-slate-800 text-slate-300 rounded-md border border-slate-700">
+                                Role: [Your Role]
+                            </span>
+                            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+                                <strong class="text-slate-300">Contribution:</strong> [Contribution details here - e.g., Compiled video demonstrations and authored documentation.]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="labs" class="scroll-mt-24 space-y-8">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="text-3xl font-extrabold text-white tracking-tight">Labs & Vulnerabilities Cases</h2>
+                <p class="text-slate-400 text-sm mt-1">Interactive demonstrations, video walkthroughs, and security reflections.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Case 1: Login Test -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20">Case 1</span>
+                            <span class="text-xs text-slate-400 font-medium">Login Test</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Authentication & Login Vulnerability</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Demonstration of broken authentication mechanisms in login workflows and implementation of secure credential hashing with rate limiting.
+                        </p>
+                        
+                        <!-- Embedded YouTube Video -->
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 1 - Login Test Vulnerability Demonstration" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <!-- Reflection -->
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-brand-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Reflected on the critical impact of improper session management. Implementing multi-factor authentication and enforced salted passwords greatly mitigates credential stuffing attacks.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+                <!-- Case 2: Data 1 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-accent-500/10 text-accent-400 border border-accent-500/20">Case 2</span>
+                            <span class="text-xs text-slate-400 font-medium">Data Security 1</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Insecure Local Data Storage</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Analyzing unencrypted local storage vulnerability on client devices and fixing it using Room with SQLCipher integration.
+                        </p>
+                        
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 2 - Insecure Data Storage Demonstration" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-accent-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Storing user tokens in plain text poses severe risk if physical device access is compromised. Encrypted Shared Preferences and hardware-backed keystores are non-negotiable.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+                <!-- Case 3: Data 2 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Case 3</span>
+                            <span class="text-xs text-slate-400 font-medium">Data Security 2</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Insecure Transit & API Data Leakage</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Intercepting unencrypted HTTP traffic via Proxy tools and securing data transmission using Retrofit SSL Pinning.
+                        </p>
+                        
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 3 - Transit Data Leakage Demonstration" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-purple-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Man-in-the-middle attacks highlight why TLS is not enough on its own. Implementing certificate pinning guarantees that client apps communicate exclusively with authentic backends.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+                <!-- Case 4: SQL Injection -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">Case 4</span>
+                            <span class="text-xs text-slate-400 font-medium">Injection Attack</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">SQL Injection Remediation</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Simulating SQL Injection in query inputs and patching it with parameterized queries and ORM object mappers.
+                        </p>
+                        
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 4 - SQL Injection Demonstration" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-rose-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Dynamic query string concatenation remains a primary cause of database breaches. Adopting prepared statements completely isolates executable commands from user input data.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+                <!-- Case 5: Placeholder 1 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Case 5</span>
+                            <span class="text-xs text-slate-400 font-medium">CameraX / ML Integration</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Biometric & Camera Permission Leak</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Evaluating excessive permission vulnerabilities in CameraX pipeline and scoping runtime permission checks.
+                        </p>
+                        
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 5 - CameraX Permission Vulnerability" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-amber-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Principle of least privilege must extend to client hardware permissions. Explicit user consent and scoped hardware access prevent hidden background monitoring vulnerabilities.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+                <!-- Case 6: Placeholder 2 -->
+                <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between p-5 space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Case 6</span>
+                            <span class="text-xs text-slate-400 font-medium">Firestore Security Rules</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Cloud Database Misconfiguration</h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Fixing permissive public read/write access in Firebase Firestore by enforcing role-based rule definitions.
+                        </p>
+                        
+                        <div class="video-container my-3 bg-slate-900 border border-slate-800">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Case 6 - Firestore Misconfiguration Demonstration" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <span class="font-semibold text-emerald-400 block">Reflection:</span>
+                            <p>[2–3 SENTENCES: Cloud databases defaulting to open access represent a significant vulnerability vector. Custom Firestore rule validations are essential for verifying user authentication tokens before granting document reads.]</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition border border-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="reflection" class="scroll-mt-24">
+            <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 rounded-lg bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">Reflection & Learning Journey</h2>
+                </div>
+                <div class="text-slate-300 text-sm md:text-base leading-relaxed space-y-3">
+                    <p>
+                        [3–4 SENTENCES: Throughout this course, our team moved beyond theoretical knowledge to gain direct experience in defensive software architecture and penetration testing fundamentals. We discovered that building secure systems requires integrating vulnerability mitigation directly into every layer of software design rather than treating security as an afterthought. This collaborative project honed our technical capabilities in secure API integration, encrypted data storage, and cloud policy management while reinforcing the critical importance of continuous code auditing.]
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="scroll-mt-24 space-y-4">
+            <div class="border-b border-slate-800 pb-2">
+                <h2 class="text-2xl font-bold text-white">Skills & Tech Stack</h2>
+                <p class="text-slate-400 text-xs">Technologies, frameworks, and security concepts applied.</p>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-brand-300 border border-brand-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-400"></span> SQL Injection
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-accent-300 border border-accent-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-accent-400"></span> Python
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-purple-300 border border-purple-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-purple-400"></span> Room Database
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-emerald-300 border border-emerald-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Retrofit
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-amber-300 border border-amber-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span> Firebase Firestore
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-rose-300 border border-rose-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-rose-400"></span> ML Kit
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-cyan-300 border border-cyan-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span> CameraX
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-indigo-300 border border-indigo-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span> SSL Pinning
+                </span>
+                <span class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/80 text-teal-300 border border-teal-500/30 flex items-center gap-2 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-teal-400"></span> HTML5 / Tailwind CSS
+                </span>
+            </div>
+        </section>
+
+        <section id="resources" class="scroll-mt-24 space-y-4">
+            <div class="glass-panel p-6 rounded-xl border border-slate-800 space-y-4">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    Resources & Acknowledgements
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300">
+                    <div>
+                        <h3 class="font-semibold text-slate-200 text-sm mb-2">APIs & Libraries Used</h3>
+                        <ul class="list-disc list-inside space-y-1 text-slate-400">
+                            <li>Retrofit REST Client Library</li>
+                            <li>Android Room Persistence Library & SQLCipher</li>
+                            <li>Firebase SDK for Android & Firestore Rules Engine</li>
+                            <li>Google ML Kit Vision SDK & CameraX Jetpack Library</li>
+                            <li>Tailwind CSS Utility Framework</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-slate-200 text-sm mb-2">AI Assistance Acknowledgement</h3>
+                        <p class="text-slate-400 leading-relaxed">
+                            Generative AI tools (including ChatGPT and Claude) were utilized as coding assistants for generating base HTML boilerplate structural templates, optimizing CSS responsive layout styling, and proofreading vulnerability reflection descriptions. All security implementation code and logic were manually written and verified by our team.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="glass-nav mt-12 py-6 border-t border-slate-800 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© 2026 <span class="text-slate-200 font-semibold">[YOUR NAME]</span> | Matric No: <span class="text-slate-200 font-semibold">[YOUR MATRIC]</span></p>
+            <p class="text-slate-500">Student e-Portfolio • Designed for GitHub Pages</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu visibility
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
